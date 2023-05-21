@@ -1,0 +1,26 @@
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+
+Stack<int> stack = new(Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse));
+int rackSize = int.Parse(Console.ReadLine());
+int currentRackSize = rackSize;
+int racks = 1;
+
+while (stack.Any())
+{
+    currentRackSize -= stack.Peek();
+
+    if ( currentRackSize < 0)
+    {
+        currentRackSize= rackSize;
+        racks++;
+
+        continue;
+    }
+
+    stack.Pop();
+}
+Console.WriteLine(racks);
