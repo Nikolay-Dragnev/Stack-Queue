@@ -1,0 +1,45 @@
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+int bulletPrice = int.Parse(Console.ReadLine());
+int barrelSize = int.Parse(Console.ReadLine());
+Stack<int> bullets = new(Console.ReadLine().Split(" ",StringSplitOptions.RemoveEmptyEntries).Select(int.Parse));
+Queue<int> locks = new(Console.ReadLine().Split(" ",StringSplitOptions.RemoveEmptyEntries).Select(int.Parse));
+int value = int.Parse(Console.ReadLine());
+
+int currentbullet = barrelSize;
+int bulletCount = bullets.Count;
+
+for(int i = 0;i < bulletCount; i++)
+{
+    if ( bullets.Pop() <= locks.Peek())
+    {
+        Console.WriteLine("Bang!");
+        locks.Dequeue();
+    }
+    else
+    {
+        Console.WriteLine("Ping!");
+    }
+    currentbullet--;
+    if (currentbullet == 0 && bullets.Any())
+    {
+        Console.WriteLine("Reloading!");
+        currentbullet = barrelSize;
+    }
+    if (locks.Any() && !bullets.Any())
+    {
+        Console.WriteLine($"Couldn't get through. Locks left: {locks.Count}");
+        
+        return;
+    }
+    if (!locks.Any())
+    {
+        Console.WriteLine($"{bullets.Count} bullets left. Earned ${value - (bulletPrice * (bulletCount - bullets.Count))}");
+        return;
+    }
+}
+
+
