@@ -1,0 +1,34 @@
+
+using System;
+using System.Collections.Generic;
+
+string text = string.Empty;
+
+Stack<string> stack = new Stack<string>();
+
+int n = int.Parse(Console.ReadLine());
+
+for (int i = 0;i < n; i++)
+{
+    string[] token = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+    int command = int.Parse(token[0]);
+    switch(command)
+    {
+        case 1:
+            stack.Push(text);
+            text += token[1];
+            break;
+        case 2:
+            stack.Push(text);
+            int countToRemuve = int.Parse(token[1]);
+            text = text.Remove(text.Length - countToRemuve);
+            break;
+        case 3:
+             int index = int.Parse(token[1]) - 1;
+            Console.WriteLine(text[index]);
+            break;
+        case 4:
+            text = stack.Pop();
+            break;
+    }
+}
